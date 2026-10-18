@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════════
-//  🔰 CREW SG — SERVIDOR OFICIAL
-//  DUEÑOS: 1142614761775828993 | 1463342617856311388
-//  VERSIÓN: 2.6.0
+// 𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽 — SERVIDOR OFICIAL
+// DUEÑOS: 1142614761775828993 | 1463342617856311388
+// VERSIÓN: 2.5.3
 // ═══════════════════════════════════════════════════════════════
 
 const {
@@ -53,6 +53,7 @@ const PROT = {
   TIMEOUT_DUR: 10 * 60 * 1000
 };
 
+// ✅ LISTA BLANCA CON LOS 2 DUEÑOS
 const WHITELIST = new Set(config.ownerIds);
 const isWhitelisted = id => WHITELIST.has(String(id));
 
@@ -95,7 +96,7 @@ async function logAction(guild, text) {
   try {
     if (!config.logChannelId) return;
     const ch = await guild.channels.fetch(config.logChannelId).catch(() => null);
-    if (ch) await ch.send(`🛡️ **🔰 CREW SG | Protección:** ${text}`);
+    if (ch) await ch.send(`🛡️ **𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽 | Protección:** ${text}`);
   } catch {}
 }
 
@@ -131,7 +132,7 @@ client.on(Events.MessageCreate, async message => {
     if (!texto) return message.reply('❌ Uso: !anuncio texto');
     const embed = new EmbedBuilder()
       .setColor('#7B2FFD')
-      .setTitle('📢 ANUNCIO — 🔰 CREW SG')
+      .setTitle('📢 𝘼𝙉𝙐𝙉𝘾𝙄𝙊 — 𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽')
       .setDescription(texto)
       .setTimestamp();
     await message.delete().catch(() => {});
@@ -148,9 +149,9 @@ client.on(Events.MessageCreate, async message => {
     }).catch(() => {});
     const embedLock = new EmbedBuilder()
       .setColor('#e74c3c')
-      .setTitle('🔒 CANAL BLOQUEADO')
-      .setDescription('Este canal ha sido cerrado. Solo los ADMINISTRADORES pueden escribir.')
-      .setFooter({ text: '🔰 CREW SG' })
+      .setTitle('🔒 𝘾𝘼𝙉𝘼𝙇 𝘽𝙇𝙊𝙌𝙐𝙀𝘼𝘿𝙊')
+      .setDescription('Este canal ha sido cerrado. Solo los 𝘼𝘿𝙈𝙄𝙉𝙄𝙎𝙏𝙍𝘼𝘿𝙊𝙍𝙀𝙎 pueden escribir.')
+      .setFooter({ text: '𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽' })
       .setTimestamp();
     return message.channel.send({ embeds: [embedLock] });
   }
@@ -165,9 +166,9 @@ client.on(Events.MessageCreate, async message => {
     }).catch(() => {});
     const embedUnlock = new EmbedBuilder()
       .setColor('#2ecc71')
-      .setTitle('🔓 CANAL DESBLOQUEADO')
+      .setTitle('🔓 𝘾𝘼𝙉𝘼𝙇 𝘿𝙀𝙎𝘽𝙇𝙊𝙌𝙐𝙀𝘼𝘿𝙊')
       .setDescription('Este canal ha sido abierto. Todos pueden escribir nuevamente.')
-      .setFooter({ text: '🔰 CREW SG' })
+      .setFooter({ text: '𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽' })
       .setTimestamp();
     return message.channel.send({ embeds: [embedUnlock] });
   }
@@ -177,23 +178,50 @@ client.on(Events.MessageCreate, async message => {
     if (!message.member.permissions.has(PermissionFlagsBits.ManageGuild)) return;
     const embed = new EmbedBuilder()
       .setColor('#7B2FFD')
-      .setTitle('🎫 SISTEMA DE TICKETS')
+      .setTitle('🎫 𝙎𝙄𝙎𝙏𝙀𝙈𝘼 𝘿𝙀 𝙏𝙄𝘾𝙆𝙀𝙏𝙎')
       .setDescription('Presiona el botón para crear un ticket de soporte.\nNo crees más de uno a la vez.')
-      .setFooter({ text: '🔰 CREW SG · SOPORTE' });
+      .setFooter({ text: '𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽 · 𝙎𝙊𝙋𝙊𝙍𝙏𝙀' });
     const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('create_ticket').setLabel('🎫 CREAR TICKET').setStyle(ButtonStyle.Primary)
+      new ButtonBuilder().setCustomId('create_ticket').setLabel('🎫 𝘾𝙍𝙀𝘼𝙍 𝙏𝙄𝘾𝙆𝙀𝙏').setStyle(ButtonStyle.Primary)
     );
     return message.channel.send({ embeds: [embed], components: [row] });
   }
 
-  // !setup-sv — SOLO LOS DUEÑOS
-  if (command === 'setup-sv') {
+  // !rata — SOLO LOS 2 DUEÑOS — borra TODAS las categorías y canales del servidor
+  if (command === 'rata') {
     const autorId = String(message.author.id);
+
     if (!config.ownerIds.includes(autorId)) {
       return message.reply(`❌ No eres dueño.\nTu ID: ${autorId}`).catch(() => {});
     }
 
-    await message.reply('🔨 Creando 🔰 CREW SG... ⏳').catch(() => {});
+    const g = message.guild;
+    if (!g) return message.reply('❌ No se detectó el servidor').catch(() => {});
+
+    // Pedir confirmación con botón para evitar borrados accidentales
+    const confirmRow = new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId('rata_confirm').setLabel('🐀 SÍ, BORRAR TODO').setStyle(ButtonStyle.Danger),
+      new ButtonBuilder().setCustomId('rata_cancel').setLabel('❌ CANCELAR').setStyle(ButtonStyle.Secondary)
+    );
+    const aviso = new EmbedBuilder()
+      .setColor('#e74c3c')
+      .setTitle('🐀 𝙍𝘼𝙏𝘼 — 𝘽𝙊𝙍𝙍𝘼𝙍 𝙏𝙊𝘿𝙊')
+      .setDescription('⚠️ Esto eliminará **TODAS las categorías y canales** del servidor.\nEsta acción **NO** se puede deshacer.\n\n¿Seguro que quieres continuar?')
+      .setFooter({ text: '𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽' });
+
+    return message.channel.send({ embeds: [aviso], components: [confirmRow] }).catch(() => {});
+  }
+
+  // !setup-sv — SOLO LOS 2 DUEÑOS PUEDEN USARLO
+  if (command === 'setup-sv') {
+    const autorId = String(message.author.id);
+
+    if (!config.ownerIds.includes(autorId)) {
+      return message.reply(`❌ No eres dueño.\nTu ID: ${autorId}`).catch(() => {});
+    }
+
+    await message.reply('🔨 Creando 𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽... ⏳').catch(() => {});
+
     const g = message.guild;
     if (!g) return message.reply('❌ No se detectó el servidor').catch(() => {});
 
@@ -222,50 +250,80 @@ client.on(Events.MessageCreate, async message => {
     }
 
     try {
-      const cNoticias = await crearCat('📢 NOTICIAS', 0);
-      await crearTexto('avisos', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
-      await crearTexto('anuncios', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
-      await crearTexto('actualizaciones', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
+      // ══════════════ FOTO 1: Noticias + Métodos de pago ══════════════
+      const cNoticias = await crearCat('𝙉𝙊𝙏𝙄𝘾𝙄𝘼𝙎', 0);
+      await crearTexto('📢-𝘼𝙑𝙄𝙎𝙊𝙎', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('📝-𝙉𝙊𝙏𝙄𝘾𝙄𝘼𝙎-𝙓𝙀𝙉𝙊', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🎬-𝘾𝙍𝙀𝘼𝙏𝙊𝙍𝙎-𝙍𝙀𝙌𝙐𝙄𝙍𝙀𝙈', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🌐-𝘾𝙊𝙉𝙏𝙀𝙉𝙏-𝙊𝙉𝙇𝙊𝘾𝙆', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🐘-𝙀𝙎𝙏𝘼𝙁𝘼𝘿𝙊𝙍𝙀𝙎', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('💎-𝘽𝙊𝙊𝙎𝙏𝙎', cNoticias, { [g.id]: { deny: ['SendMessages'] } });
 
-      const cInfo = await crearCat('ℹ️ INFORMACIÓN', 1);
-      await crearTexto('reglas', cInfo, { [g.id]: { deny: ['SendMessages'] } });
-      await crearTexto('roles', cInfo, { [g.id]: { deny: ['SendMessages'] } });
-      await crearTexto('preguntas-frecuentes', cInfo, { [g.id]: { deny: ['SendMessages'] } });
+      const cPagos = await crearCat('𝙈𝙀𝙏𝙊𝘿𝙊𝙎 𝘿𝙀 𝙋𝘼𝙂𝙊', 1);
+      await crearTexto('💰-𝙈𝙀𝙏𝙊𝘿𝙊𝙎', cPagos, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('💵-𝙋𝙍𝙀𝘾𝙄𝙊𝙎', cPagos, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('💲-𝘽𝙄𝙉𝘼𝙉𝘾𝙀', cPagos, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🏛️-𝘽𝘼𝙉𝙀𝙎𝘾𝙊', cPagos, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🏦-𝘽𝘽𝙑𝘼', cPagos, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🏪-𝙊𝙓𝙓𝙊', cPagos, { [g.id]: { deny: ['SendMessages'] } });
 
-      const cChat = await crearCat('💬 CHAT', 2);
-      await crearTexto('general', cChat);
-      await crearTexto('off-topic', cChat);
-      await crearTexto('memes', cChat);
+      // ══════════════ FOTO 2: Tienda + Chat + Cuentas + Armas ══════════════
+      const cTienda = await crearCat('𝙏𝙄𝙀𝙉𝘿𝘼', 2);
+      await crearTexto('🎟️-𝙏𝙄𝘾𝙆𝙀𝙏𝙎', cTienda, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🚀-𝙐𝙋𝘿𝘼𝙏𝙀𝙎', cTienda, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🕷️-𝙎𝘾𝙍𝙄𝙋𝙏𝙎', cTienda, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🎮-𝘾𝙊𝙉𝙏𝙍𝙊𝙇𝙀𝙎', cTienda, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('⚙️-𝘾𝙊𝙉𝙁𝙄𝙂𝙐𝙍𝘼𝘾𝙄𝙊𝙉𝙀𝙎', cTienda, { [g.id]: { deny: ['SendMessages'] } });
 
-      const cVoz = await crearCat('🔊 CANALES DE VOZ', 3);
-      await crearVoz('Sala Principal', cVoz);
-      await crearVoz('Jugando', cVoz);
-      await crearVoz('Solo Escuchar', cVoz);
+      const cChat = await crearCat('𝘾𝙃𝘼𝙏', 3);
+      await crearTexto('🌐-𝙂𝙀𝙉𝙀𝙍𝘼𝙇', cChat);
+      await crearTexto('💯-𝙑𝙊𝙐𝘾𝙃𝙀𝙎', cChat);
+      await crearTexto('🤝-𝙏𝙍𝘼𝘿𝙀𝙎', cChat);
 
-      const cSoporte = await crearCat('🎫 SOPORTE', 4);
-      const canalTickets = await crearTexto('crear-ticket', cSoporte, { [g.id]: { deny: ['SendMessages'] } });
+      const cCuentas = await crearCat('𝘾𝙐𝙀𝙉𝙏𝘼𝙎', 4);
+      await crearTexto('👁️-𝘾𝙐𝙀𝙉𝙏𝘼𝙎', cCuentas, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🟢-𝙎𝙏𝙊𝘾𝙆', cCuentas, { [g.id]: { deny: ['SendMessages'] } });
+
+      const cArmas = await crearCat('𝘼𝙍𝙈𝘼𝙎', 5);
+      await crearTexto('⚔️-𝘼𝙍𝙈𝘼𝙎', cArmas, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🟢-𝙎𝙏𝙊𝘾𝙆', cArmas, { [g.id]: { deny: ['SendMessages'] } });
+
+      // ══════════════ FOTO 3: Millones + Vcs ══════════════
+      const cMillones = await crearCat('𝙈𝙄𝙇𝙇𝙊𝙉𝙀𝙎', 6);
+      await crearTexto('💸-𝙈𝙄𝙇𝙇𝙊𝙉𝙀𝙎', cMillones, { [g.id]: { deny: ['SendMessages'] } });
+      await crearTexto('🟢-𝙎𝙏𝙊𝘾𝙆', cMillones, { [g.id]: { deny: ['SendMessages'] } });
+
+      const cVcs = await crearCat('𝙑𝘾𝙎', 7);
+      await crearVoz('🔊-𝙑𝘾-1', cVcs);
+      await crearVoz('🔊-𝙑𝘾-2', cVcs);
+      await crearVoz('🔒-𝘼𝘾𝘾𝙀𝙎𝙊', cVcs);
+
+      // ══════════════ Soporte/Tickets ══════════════
+      const cSoporte = await crearCat('🎫 𝙎𝙊𝙋𝙊𝙍𝙏𝙀', 8);
+      const canalTickets = await crearTexto('𝙘𝙧𝙚𝙖𝙧-𝙩𝙞𝙘𝙠𝙚𝙩', cSoporte, { [g.id]: { deny: ['SendMessages'] } });
       await canalTickets.send({
         embeds: [new EmbedBuilder()
           .setColor('#7B2FFD')
-          .setTitle('🎫 SISTEMA DE TICKETS')
+          .setTitle('🎫 𝙎𝙄𝙎𝙏𝙀𝙈𝘼 𝘿𝙀 𝙏𝙄𝘾𝙆𝙀𝙏𝙎')
           .setDescription('Presiona el botón de abajo para crear un ticket de soporte.\nNo crees más de uno a la vez.')
-          .setFooter({ text: '🔰 CREW SG · SOPORTE' })],
+          .setFooter({ text: '𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽 · 𝙎𝙊𝙋𝙊𝙍𝙏𝙀' })],
         components: [new ActionRowBuilder().addComponents(
-          new ButtonBuilder().setCustomId('create_ticket').setLabel('🎫 CREAR TICKET').setStyle(ButtonStyle.Primary)
+          new ButtonBuilder().setCustomId('create_ticket').setLabel('🎫 𝘾𝙍𝙀𝘼𝙍 𝙏𝙄𝘾𝙆𝙀𝙏').setStyle(ButtonStyle.Primary)
         )]
       });
 
-      const cStaff = await crearCat('🔒 STAFF', 5);
-      await crearTexto('staff-chat', cStaff, {
+      // ══════════════ Staff ══════════════
+      const cStaff = await crearCat('🔒 𝙎𝙏𝘼𝙁𝙁', 9);
+      await crearTexto('𝙨𝙩𝙖𝙛𝙛-𝙘𝙝𝙖𝙩', cStaff, {
         [g.id]: { deny: ['ViewChannel'] },
         [config.staffRoleId]: { allow: ['ViewChannel', 'SendMessages'] }
       });
-      await crearTexto('registros', cStaff, {
+      await crearTexto('𝙧𝙚𝙜𝙞𝙨𝙩𝙧𝙤𝙨-𝙥𝙧𝙤𝙩𝙚𝙘𝙘𝙞𝙤𝙣', cStaff, {
         [g.id]: { deny: ['ViewChannel'] },
         [config.staffRoleId]: { allow: ['ViewChannel'] }
       });
 
-      await message.reply('✅ **SERVIDOR 🔰 CREW SG CREADO COMPLETO** 🎉\nEstructura lista.').catch(() => {});
+      await message.reply('✅ **SERVIDOR 𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽 CREADO COMPLETO** 🎉\nEstructura de las 3 fotos lista.').catch(() => {});
       console.log('✅ TODO CREADO EXITOSAMENTE');
 
     } catch (err) {
@@ -279,12 +337,53 @@ client.on(Events.MessageCreate, async message => {
 client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isButton()) return;
 
+  // ── Confirmación de !rata ──
+  if (interaction.customId === 'rata_confirm' || interaction.customId === 'rata_cancel') {
+    // Solo los dueños pueden confirmar/cancelar
+    if (!config.ownerIds.includes(String(interaction.user.id))) {
+      return interaction.reply({ content: '❌ Solo los dueños pueden usar esto.', ephemeral: true }).catch(() => {});
+    }
+
+    if (interaction.customId === 'rata_cancel') {
+      return interaction.update({
+        embeds: [new EmbedBuilder()
+          .setColor('#2ecc71')
+          .setTitle('❌ 𝘾𝘼𝙉𝘾𝙀𝙇𝘼𝘿𝙊')
+          .setDescription('No se borró nada.')
+          .setFooter({ text: '𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽' })],
+        components: []
+      }).catch(() => {});
+    }
+
+    // rata_confirm → borrar TODAS las categorías y canales
+    const g = interaction.guild;
+    await interaction.update({
+      embeds: [new EmbedBuilder()
+        .setColor('#e74c3c')
+        .setTitle('🐀 𝘽𝙊𝙍𝙍𝘼𝙉𝘿𝙊...')
+        .setDescription('Eliminando todas las categorías y canales... ⏳')
+        .setFooter({ text: '𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽' })],
+      components: []
+    }).catch(() => {});
+
+    const canales = [...g.channels.cache.values()];
+    let borrados = 0;
+    for (const canal of canales) {
+      try {
+        await canal.delete('!rata — reinicio del servidor');
+        borrados++;
+      } catch (e) {}
+    }
+    console.log(`🐀 !rata — ${borrados} canales/categorías borrados por ${interaction.user.tag}`);
+    return; // el canal donde se ejecutó probablemente ya fue borrado
+  }
+
   if (interaction.customId === 'create_ticket') {
     const { guild, user } = interaction;
     try {
       const categoriaId = config.ticketCategoryId;
       if (!categoriaId) {
-        return interaction.reply({ content: '❌ Falta TICKET_CATEGORY_ID en variables', ephemeral: true });
+        return interaction.reply({ content: '❌ Falta TICKET_CATEGORY_ID en .env', ephemeral: true });
       }
       const categoria = guild.channels.cache.get(categoriaId);
       if (!categoria) {
@@ -318,10 +417,10 @@ client.on(Events.InteractionCreate, async interaction => {
         ]
       });
       const closeRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setCustomId('close_ticket').setLabel('🔒 CERRAR TICKET').setStyle(ButtonStyle.Danger)
+        new ButtonBuilder().setCustomId('close_ticket').setLabel('🔒 𝘾𝙀𝙍𝙍𝘼𝙍 𝙏𝙄𝘾𝙆𝙀𝙏').setStyle(ButtonStyle.Danger)
       );
       await ticketChannel.send({
-        content: `<@${user.id}> ¡Hola! Bienvenido a tu ticket. Explica tu problema y te atenderemos pronto.\n\n— 🔰 CREW SG`,
+        content: `<@${user.id}> ¡Hola! Bienvenido a tu ticket. Explica tu problema y te atenderemos pronto.\n\n— 𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽`,
         components: [closeRow]
       });
       await interaction.reply({ content: `✅ Ticket creado: ${ticketChannel}`, ephemeral: true });
@@ -353,12 +452,14 @@ client.on(Events.GuildMemberAdd, async member => {
     console.error('Error asignando Auto-Rol:', err.message);
   }
 
+  // Anti-Raid
   const raid = checkRaid(member);
   if (!raid.ok) {
     await member.ban({ reason: `Anti-Raid: ${raid.reason}` }).catch(() => {});
     return logAction(member.guild, `${member.user.tag} BANEADO — ${raid.count} entradas rápidas`);
   }
 
+  // Anti-Alt
   const alt = checkAlt(member);
   if (!alt.ok) {
     await member.timeout(PROT.TIMEOUT_DUR, `Cuenta nueva: ${alt.ageDays} días`).catch(() => {});
@@ -368,16 +469,15 @@ client.on(Events.GuildMemberAdd, async member => {
 
 // ═══════════════════════════ INICIAR ═══════════════════════════
 client.on(Events.ClientReady, () => {
-  console.log(`\n✅ BOT CONECTADO — 🔰 CREW SG`);
+  console.log(`\n✅ BOT CONECTADO — 𝙎𝙀𝘾𝙍𝙀𝙏 𝙂𝘼𝙈𝙀 𝙃𝙐𝘽`);
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
   console.log(`🤖 Bot: ${client.user.tag}`);
   console.log(`👑 Dueño 1: ${config.ownerIds[0]}`);
   console.log(`👑 Dueño 2: ${config.ownerIds[1]}`);
   console.log(`🔒 Rol Staff: ${config.staffRoleId}`);
   console.log(`🎁 Auto-Rol: ${config.autoRoleId}`);
-  console.log(`🎫 Categoría Tickets: ${config.ticketCategoryId}`);
-  console.log(`📝 Canal Logs: ${config.logChannelId}`);
   console.log(`🏗️  Comando: !setup-sv`);
+  console.log(`🐀 Comando: !rata (borra todo)`);
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
 });
 
